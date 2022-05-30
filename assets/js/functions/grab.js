@@ -1,12 +1,13 @@
 import {cbr, ball} from "../main.js";
 
-let ax, ay;
+let ax, ay, oax, oay;
 
 export const
 	grab = e => {
 		let x = e.clientX - cbr.left,
 			y = e.clientY - cbr.top;
 
+		// Check if the cursor is on the ball
 		if (
 			x > ball.cx - ball.rad &&
 			x < ball.cx + ball.rad &&
@@ -21,16 +22,21 @@ export const
 		}
 	},
 	move = e => {
-		let x = e.clientX - cbr.left - C.width / 2,
-			y = -e.clientY + cbr.top + C.height / 2;
+		let x = e.clientX - cbr.left - C.width2,
+			y = -e.clientY + cbr.top + C.height2;
+
+		ax = oax + x;
+		Math.abs(ax) <= 2 && (ax = 0);
+		ay = oay - y;
+		Math.abs(ay) <= 2 && (ay = 0);
 
 		ball.x = x;
 		ball.y = y;
-		ball.ax = ax + x;
-		ball.ay = ay - y;
+		ball.ax = ax;
+		ball.ay = ay;
 
-		ax = -x;
-		ay = y;
+		oax = -x;
+		oay = y;
 	},
 	release = e => {
 		ball.grabbed = false;

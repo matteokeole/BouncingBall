@@ -1,3 +1,7 @@
+:root {
+	--primary: #1e4b96;
+}
+
 body {
 	display: flex;
 	flex-direction: column;
@@ -10,9 +14,26 @@ body {
 }
 
 h3 {
-	color: #1e4b96;
+	color: var(--primary);
 	user-select: none;
 	font-weight: normal;
+	font-style: italic;
 }
 
-canvas {border: 2px solid #1e4b96}
+div {margin-bottom: 25px}
+
+input {
+	width: 150px;
+	margin: 0 5px;
+	padding-bottom: 3px;
+	outline: none;
+	border: none;
+	border-bottom: 2px solid var(--primary);
+	background-color: unset;
+	color: var(--primary);
+	text-align: center;
+	font-size: 16px;
+	font-family: inherit;
+}
+
+canvas {border: 3px solid var(--primary)}

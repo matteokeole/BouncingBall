@@ -1,4 +1,4 @@
-import {GRAVITY as G, FRICTION as F, ball} from "../main.js";
+import {Physics, ball} from "../main.js";
 import render from "./render.js";
 
 export default function update() {
@@ -6,19 +6,19 @@ export default function update() {
 	let x = ball.x + ball.ax,
 		y = ball.y - ball.ay;
 
-	ball.ay += G;
+	ball.ay += Physics.gravity;
 
 	// Left & right
 	if (
-		x - ball.rad < -C.width / 2 ||
-		x + ball.rad >= C.width / 2
-	) ball.ax *= -F;
+		x - ball.rad < -C.width2 ||
+		x + ball.rad >= C.width2
+	) ball.ax *= -Physics.friction;
 
 	// Top & bottom
 	if (
-		-y - ball.rad < -C.height / 2 ||
-		-y + ball.rad >= C.height / 2
-	) ball.ay *= -F;
+		-y - ball.rad < -C.height2 ||
+		-y + ball.rad >= C.height2
+	) ball.ay *= -Physics.friction;
 
 	// Update position
 	if (!ball.grabbed) {
@@ -30,11 +30,14 @@ export default function update() {
 		frames = framerate;
 
 		render();
+
+		ball.ox = ball.x;
+		ball.oy = ball.y;
 	}
 
 	requestAnimationFrame(update);
 };
 
-let fps			= 60, // Define frames per second value here
-	framerate	= 165 / fps,
-	frames		= 0;
+let fps = 60, // Define frames per second here
+	framerate = 165 / fps,
+	frames = 0;
