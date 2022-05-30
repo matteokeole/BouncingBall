@@ -7,13 +7,14 @@ export const
 		ball.cy = -ball.y - 1 + C.height / 2;
 
 		ctx.beginPath();
-		ctx.arc(
+		ctx.ellipse(
 			ball.cx,
 			ball.cy,
 			ball.rad,
+			ball.rad,
+			0,
 			0,
 			Math.PI * 2,
-			false,
 		);
 		ctx.fill();
 	};

@@ -1,8 +1,10 @@
-export default function(x, y, dx, dy, rad, color) {
+export default function(x, y, ax, ay, rad, color) {
+	// Position
 	this.x			= x;
 	this.y			= y;
-	this.dx			= dx;
-	this.dy			= dy;
+	// Acceleration
+	this.ax			= ax;
+	this.ay			= ay;
 	this.rad		= rad;
 	this.color		= color;
 	this.grabbed	= false;

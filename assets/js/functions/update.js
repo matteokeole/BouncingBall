@@ -2,23 +2,28 @@ import {GRAVITY as G, FRICTION as F, ball} from "../main.js";
 import render from "./render.js";
 
 export default function update() {
+	// Calculate destination position
+	let x = ball.x + ball.ax,
+		y = ball.y - ball.ay;
+
+	ball.ay += G;
+
 	// Left & right
 	if (
-		ball.x - ball.rad < -C.height / 2 ||
-		ball.x + ball.rad + 1 >= C.width / 2
-	) ball.dx *= -F;
+		x - ball.rad < -C.width / 2 ||
+		x + ball.rad >= C.width / 2
+	) ball.ax *= -F;
 
 	// Top & bottom
 	if (
-		-ball.y - ball.rad < -C.height / 2 ||
-		-ball.y + ball.rad - 1 >= C.height / 2
-	) ball.dy *= -F;
-	else ball.dy += G;
+		-y - ball.rad < -C.height / 2 ||
+		-y + ball.rad >= C.height / 2
+	) ball.ay *= -F;
 
 	// Update position
 	if (!ball.grabbed) {
-		ball.x += ball.dx;
-		ball.y -= ball.dy;
+		ball.x += ball.ax;
+		ball.y -= ball.ay;
 	}
 
 	if (frames-- <= 0) {

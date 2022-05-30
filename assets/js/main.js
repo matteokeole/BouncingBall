@@ -7,13 +7,13 @@ C.height = 400;
 
 export const
 	ctx			= C.getContext("2d"),
-	cbcr		= C.getBoundingClientRect(),
+	cbr			= C.getBoundingClientRect(),
 	GRAVITY		= .05,
-	FRICTION	= .7,
+	FRICTION	= .65,
 	ball		= new Ball(
-		0, 100,
+		0, 50,
 		1, 1,
-		20,
+		25,
 		"#8ea4ca",
 	);
 

@@ -1,9 +1,11 @@
-import {cbcr, ball} from "../main.js";
+import {cbr, ball} from "../main.js";
+
+let ax, ay;
 
 export const
 	grab = e => {
-		let x = e.clientX - cbcr.left,
-			y = e.clientY - cbcr.top;
+		let x = e.clientX - cbr.left,
+			y = e.clientY - cbr.top;
 
 		if (
 			x > ball.cx - ball.rad &&
@@ -11,29 +13,27 @@ export const
 			y > ball.cy - ball.rad &&
 			y < ball.cy + ball.rad
 		) {
-			ball.dx = 0;
-			ball.dy = 0;
+			ball.ax = 0;
+			ball.ay = 0;
 			ball.grabbed = true;
 
 			C.addEventListener("mousemove", move);
 		}
 	},
 	move = e => {
-		let x = e.clientX - cbcr.left - C.width / 2,
-			y = -e.clientY + cbcr.top + C.height / 2;
+		let x = e.clientX - cbr.left - C.width / 2,
+			y = -e.clientY + cbr.top + C.height / 2;
 
 		ball.x = x;
 		ball.y = y;
-		ball.dx = -(edx - x);
-		ball.dy = edy - y;
+		ball.ax = ax + x;
+		ball.ay = ay - y;
 
-		edx = x;
-		edy = y;
+		ax = -x;
+		ay = y;
 	},
 	release = e => {
 		ball.grabbed = false;
 
 		C.removeEventListener("mousemove", move);
 	};
-
-let edx = 0, edy = 0;
