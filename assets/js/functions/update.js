@@ -38,6 +38,6 @@ export default function update() {
 	requestAnimationFrame(update);
 };
 
-let fps = 60, // Define frames per second here
+let fps = 24, // Define frames per second here
 	framerate = 165 / fps,
 	frames = 0;
