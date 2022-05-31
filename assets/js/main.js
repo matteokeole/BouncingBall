@@ -12,7 +12,7 @@ export const
 	ctx = C.getContext("2d"),
 	cbr = C.getBoundingClientRect(),
 	Physics = {
-		gravity: .5,
+		gravity: .05,
 		friction: .65,
 	},
 	ball = new Ball(
