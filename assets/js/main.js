@@ -12,10 +12,8 @@ export const
 	ctx = C.getContext("2d"),
 	cbr = C.getBoundingClientRect(),
 	Physics = {
-		gravity: .05,
-		gravity_default: .05,
+		gravity: .5,
 		friction: .65,
-		friction_default: .65,
 	},
 	ball = new Ball(
 		0, 50,
@@ -23,6 +21,9 @@ export const
 		25,
 		"#8ea4ca",
 	);
+
+Physics.gravity_default = Physics.gravity;
+Physics.friction_default = Physics.friction;
 
 ctx.fillStyle = ball.color;
 
