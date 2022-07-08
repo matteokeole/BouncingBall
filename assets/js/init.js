@@ -24,10 +24,10 @@ export default () => {
 
 	let box1 = new Box(
 		66, 66,
-		0xff9800,
+		0x7f5056,
 	);
 
 
 
-	meshes.push(ball1, ball2, box1);
+	meshes.push(box1);
 };

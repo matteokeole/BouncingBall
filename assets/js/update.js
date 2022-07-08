@@ -40,6 +40,7 @@ export default () => {
 					if (mesh.position.y - mesh.h2 < -C.h2) mesh.position.y = -C.h2 + mesh.h2;
 					if (mesh.position.y + mesh.h2 > C.h2) mesh.position.y = C.h2 - mesh.h2;
 				}
+				mesh.rotation -= .001;
 
 				// Left & right
 				if (

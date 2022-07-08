@@ -27,9 +27,13 @@ export default () => {
 
 		if (mesh instanceof Box) {
 			for (const v of mesh.vertices) {
-				const p = mesh.position.add(v).add(new Vector2(C.w2, -C.h2));
+				let r = new Vector2(
+					v.x * Math.cos(mesh.rotation) + v.y * Math.sin(mesh.rotation),
+					v.x * Math.sin(mesh.rotation) - v.y * Math.cos(mesh.rotation),
+				);
+				let t = mesh.position.add(r).add(new Vector2(C.w2, -C.h2));
 
-				ctx.lineTo(p.x, -p.y);
+				ctx.lineTo(t.x, -t.y);
 			}
 		}
 
