@@ -47,6 +47,25 @@ Vector2.prototype.addScaledVector = function(v, n) {
 	return this.add(v.multiplyScalar(n));
 };
 
+Vector2.prototype.clampScalar = function(options) {
+	let abs = new Vector2(
+		Math.abs(this.x),
+		Math.abs(this.y),
+	);
+
+	if (options.min !== undefined) {
+		if (abs.x < options.min) this.x = options.minReplace;
+		if (abs.y < options.min) this.y = options.minReplace;
+	}
+
+	if (options.max !== undefined) {
+		if (abs.x > options.max) this.x = options.maxReplace;
+		if (abs.y > options.max) this.y = options.maxReplace;
+	}
+
+	return this;
+}
+
 /**
  * Rounds up the position of this vector to the nearest integer value.
  * 

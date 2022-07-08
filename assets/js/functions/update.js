@@ -1,39 +1,45 @@
-import {Physics, ball} from "../main.js";
+import {Vector2} from "../class/Vector2.js";
+import {Physics, meshes} from "../main.js";
 
 export default function update() {
-	// Calculate destination position
-	let p = ball.p.clone();
-	p.x += ball.a.x;
-	p.y -= ball.a.y;
+	for (const mesh of meshes) {
+		// Calculate destination position
+		let p = mesh.p.add(mesh.a);
 
-	if (!ball.grabbed) {
-		ball.a.y += Physics.gravity;
-	} else {
-		if (ball.p.x - ball.rad < -C.w2) ball.p.x = -C.w2 + ball.rad;
-		if (ball.p.x + ball.rad > C.w2) ball.p.x = C.w2 - ball.rad;
+		if (!mesh.grabbed) mesh.a.y += Physics.gravity;
+		else {
+			if (mesh.p.x - mesh.rad < -C.w2) {
+				mesh.a.x *= -1;
+				mesh.p.x = -C.w2 + mesh.rad;
+			}
+			if (mesh.p.x + mesh.rad > C.w2) {
+				mesh.a.x *= -1;
+				mesh.p.x = C.w2 - mesh.rad;
+			}
 
-		if (ball.p.y - ball.rad < -C.h2) ball.p.y = -C.h2 + ball.rad;
-		if (ball.p.y + ball.rad > C.h2) ball.p.y = C.h2 - ball.rad;
+			if (mesh.p.y - mesh.rad < -C.h2) {
+				mesh.a.y *= -1;
+				mesh.p.y = -C.h2 + mesh.rad;
+			}
+			if (mesh.p.y + mesh.rad > C.h2) {
+				mesh.a.y *= -1;
+				mesh.p.y = C.h2 - mesh.rad;
+			}
+		}
+
+		// Left & right
+		if (
+			p.x - mesh.rad < -C.w2 ||
+			p.x + mesh.rad >= C.w2
+		) mesh.a.x *= -Physics.friction;
+
+		// Top & bottom
+		if (
+			p.y - mesh.rad < -C.h2 ||
+			p.y + mesh.rad >= C.h2
+		) mesh.a.y *= -Physics.friction;
+
+		// Update position if not grabbed
+		if (!mesh.grabbed) mesh.p = mesh.p.add(mesh.a);
 	}
-
-	// Left & right
-	if (
-		p.x - ball.rad < -C.w2 ||
-		p.x + ball.rad >= C.w2
-	) ball.a.x *= -Physics.friction;
-
-	// Top & bottom
-	if (
-		-p.y - ball.rad < -C.h2 ||
-		-p.y + ball.rad >= C.h2
-	) ball.a.y *= -Physics.friction;
-
-	// Update position if not grabbed
-	if (!ball.grabbed) {
-		ball.p.x += ball.a.x;
-		ball.p.y -= ball.a.y;
-	}
-
-	ball.ox = ball.p.x;
-	ball.oy = ball.p.y;
 };

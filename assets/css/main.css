@@ -1,9 +1,9 @@
 @import url(https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap);
 
 :root {
-	--background: #11151d;
 	--primary: #7f5056;
-	--border: #374158;
+	--secondary: #11151d;
+	--tertiary: #374158;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
 	align-items: center;
 	height: 100vh;
 	margin: 0;
-	background-color: var(--background);
+	background-color: var(--secondary);
 	font-family: "Space Grotesk", Arial, sans-serif;
 }
 
@@ -24,4 +24,4 @@ h3 {
 	font-weight: unset;
 }
 
-canvas {border: 1px solid var(--border)}
+canvas {border: 1px solid var(--tertiary)}

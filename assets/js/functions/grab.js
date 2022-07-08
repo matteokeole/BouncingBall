@@ -1,54 +1,62 @@
 import {Vector2} from "../class/Vector2.js";
-import {cbr, ball} from "../main.js";
+import {Ball} from "../class/Ball.js";
+import {meshes} from "../main.js";
 
-let o,			// Origin
+let cbr,
+	current,
+	o,			// Origin
 	d,			// Distance between the origin and the ball center
 	a,			// Ball acceleration
 	boost = 2;	// Acceleration boost
 
 export const
 	grab = e => {
+		// Compute the canvas bounding box
+		cbr = C.getBoundingClientRect();
+
 		o = new Vector2(
-			e.clientX - cbr.left - C.w2,
-			e.clientY - cbr.top - C.h2,
-		).floor();
+			e.clientX - cbr.x - C.w2,
+			-(e.clientY - cbr.y - C.h2),
+		);
 
-		o.y *= -1;
+		for (const mesh of Array.from(meshes).reverse()) {
+			if (mesh instanceof Ball) {
+				// Get the distance from the pointer to the ball center
+				d = o.substract(mesh.p);
 
-		// Get the distance from the pointer to the ball center
-		d = o.substract(ball.p);
+				// Continue if this mesh is not clicked
+				if (d.length() > mesh.rad + 1) continue;
 
-		// Check if the cursor is on the ball
-		if (d.length() <= ball.rad + 1) {
-			o = ball.p.clone();
+				o = mesh.p.clone();
 
-			ball.a = new Vector2();
-			ball.grabbed = true;
+				mesh.a = new Vector2();
+				mesh.grabbed = true;
 
-			addEventListener("mousemove", move);
+				current = mesh;
+				addEventListener("mousemove", move);
+
+				break;
+			}
 		}
 	},
 	move = e => {
 		let p = new Vector2(
-			e.clientX - cbr.left - C.w2,
-			e.clientY - cbr.top - C.h2,
-		).floor();
-		p.y *= -1;
+			e.clientX - cbr.x - C.w2,
+			-(e.clientY - cbr.y - C.h2),
+		);
 
-		a = p.substract(o);
+		a = p.substract(o).clampScalar({min: 2, minReplace: 0});
 
-		// Clamping
-		if (Math.abs(a.x) < 2) a.x = 0;
-		if (Math.abs(a.y) < 2) a.y = 0;
-		a.y *= -1;
+		current.p = p.substract(d);
+		current.a = a.multiplyScalar(boost); // Acceleration punch
 
-		ball.p = p.substract(d);
-		ball.a = a.multiplyScalar(boost); // Acceleration punch
-
-		o = p.clone();
+		o = p;
 	},
 	release = e => {
-		ball.grabbed = false;
+		if (current) {
+			current.grabbed = false;
+			current = null;
+		}
 
 		removeEventListener("mousemove", move);
 	};
