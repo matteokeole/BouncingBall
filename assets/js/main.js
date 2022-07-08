@@ -1,44 +1,29 @@
-import Ball from "./class/Ball.js";
-import update from "./functions/update.js";
+import {Vector2} from "./class/Vector2.js";
+import {Ball} from "./class/Ball.js";
 import {grab, release} from "./functions/grab.js";
-import {update_gravity, update_friction} from "./functions/input.js";
+import loop from "./functions/loop.js";
 
 C.width = 400;
 C.height = 400;
-C.width2 = C.width / 2;
-C.height2 = C.height / 2;
+C.w2 = C.width / 2;
+C.h2 = C.height / 2;
 
 export const
 	ctx = C.getContext("2d"),
 	cbr = C.getBoundingClientRect(),
 	Physics = {
-		gravity: .1,
-		friction: .65,
+		gravity: .15,
+		friction: .7,
 	},
 	ball = new Ball(
-		0, 50,
-		1, 1,
+		new Vector2(0, 50),
+		new Vector2(5, 1),
 		25,
-		"#8ea4ca",
+		0x7f5056,
 	);
-
-Physics.gravity_default = Physics.gravity;
-Physics.friction_default = Physics.friction;
-
-ctx.fillStyle = ball.color;
-
-update();
-
-// Clear inputs
-GravityInput.value = "";
-GravityInput.placeholder += ` (${Physics.gravity_default})`;
-FrictionInput.value = "";
-FrictionInput.placeholder += ` (${Physics.friction_default})`;
 
 // Drag & drop events
 C.addEventListener("mousedown", grab);
 addEventListener("mouseup", release);
 
-// Input events
-GravityInput.addEventListener("change", update_gravity);
-FrictionInput.addEventListener("change", update_friction);
+loop();

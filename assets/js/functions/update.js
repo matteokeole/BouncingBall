@@ -1,43 +1,39 @@
 import {Physics, ball} from "../main.js";
-import render from "./render.js";
 
 export default function update() {
 	// Calculate destination position
-	let x = ball.x + ball.ax,
-		y = ball.y - ball.ay;
+	let p = ball.p.clone();
+	p.x += ball.a.x;
+	p.y -= ball.a.y;
 
-	ball.ay += Physics.gravity;
+	if (!ball.grabbed) {
+		ball.a.y += Physics.gravity;
+	} else {
+		if (ball.p.x - ball.rad < -C.w2) ball.p.x = -C.w2 + ball.rad;
+		if (ball.p.x + ball.rad > C.w2) ball.p.x = C.w2 - ball.rad;
+
+		if (ball.p.y - ball.rad < -C.h2) ball.p.y = -C.h2 + ball.rad;
+		if (ball.p.y + ball.rad > C.h2) ball.p.y = C.h2 - ball.rad;
+	}
 
 	// Left & right
 	if (
-		x - ball.rad < -C.width2 ||
-		x + ball.rad >= C.width2
-	) ball.ax *= -Physics.friction;
+		p.x - ball.rad < -C.w2 ||
+		p.x + ball.rad >= C.w2
+	) ball.a.x *= -Physics.friction;
 
 	// Top & bottom
 	if (
-		-y - ball.rad < -C.height2 ||
-		-y + ball.rad >= C.height2
-	) ball.ay *= -Physics.friction;
+		-p.y - ball.rad < -C.h2 ||
+		-p.y + ball.rad >= C.h2
+	) ball.a.y *= -Physics.friction;
 
-	// Update position
+	// Update position if not grabbed
 	if (!ball.grabbed) {
-		ball.x += ball.ax;
-		ball.y -= ball.ay;
+		ball.p.x += ball.a.x;
+		ball.p.y -= ball.a.y;
 	}
 
-	if (frames-- <= 0) {
-		frames = framerate;
-
-		render();
-
-		ball.ox = ball.x;
-		ball.oy = ball.y;
-	}
-
-	requestAnimationFrame(update);
+	ball.ox = ball.p.x;
+	ball.oy = ball.p.y;
 };
-
-let fps = 60, // Define frames per second here
-	framerate = 165 / fps,
-	frames = 0;

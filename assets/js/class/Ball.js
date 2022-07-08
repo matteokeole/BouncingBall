@@ -1,13 +1,16 @@
-export default function(x, y, ax, ay, rad, color) {
-	// Position
-	this.x = this.cx = this.ox = x;
-	this.y = this.cx = this.oy = y;
-
-	// Acceleration
-	this.ax = ax;
-	this.ay = ay;
-
-	this.rad = rad;
+/**
+ * Creates a new ball.
+ * 
+ * @constructor
+ * @param	{Vector2}	position
+ * @param	{Vector2}	acceleration
+ * @param	{number}	radius
+ * @param	{string}	color
+ */
+export function Ball(position, acceleration, radius, color) {
+	this.p = position;
+	this.a = acceleration;
+	this.rad = radius;
 	this.color = color;
 	this.grabbed = false;
-}
+};

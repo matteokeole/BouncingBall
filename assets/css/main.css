@@ -1,5 +1,9 @@
+@import url(https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&display=swap);
+
 :root {
-	--primary: #1e4b96;
+	--background: #11151d;
+	--primary: #7f5056;
+	--border: #374158;
 }
 
 body {
@@ -9,31 +13,15 @@ body {
 	align-items: center;
 	height: 100vh;
 	margin: 0;
-	background-color: #000;
-	font-family: Arial, sans-serif;
+	background-color: var(--background);
+	font-family: "Space Grotesk", Arial, sans-serif;
 }
 
 h3 {
+	margin-bottom: 30px;
 	color: var(--primary);
 	user-select: none;
-	font-weight: normal;
-	font-style: italic;
+	font-weight: unset;
 }
 
-div {margin-bottom: 25px}
-
-input {
-	width: 150px;
-	margin: 0 5px;
-	padding-bottom: 3px;
-	outline: none;
-	border: none;
-	border-bottom: 2px solid var(--primary);
-	background-color: unset;
-	color: var(--primary);
-	text-align: center;
-	font-size: 16px;
-	font-family: inherit;
-}
-
-canvas {border: 3px solid var(--primary)}
+canvas {border: 1px solid var(--border)}
