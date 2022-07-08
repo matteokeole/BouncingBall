@@ -1,6 +1,8 @@
 import {Vector2} from "../class/Vector2.js";
 import {Ball} from "../class/Ball.js";
+import {Box} from "../class/Box.js";
 import {meshes} from "../main.js";
+import {intersect} from "./intersect.js";
 
 let cbr,
 	current,
@@ -20,16 +22,14 @@ export const
 		);
 
 		for (const mesh of Array.from(meshes).reverse()) {
-			if (mesh instanceof Ball) {
-				// Get the distance from the pointer to the ball center
-				d = o.substract(mesh.p);
+			// Get the distance to the mesh center
+			d = o.substract(mesh.position);
 
-				// Continue if this mesh is not clicked
-				if (d.length() > mesh.rad + 1) continue;
+			// Check if the pointer is intersecting with the mesh
+			if (intersect(o, mesh)) {
+				o = mesh.position.clone();
 
-				o = mesh.p.clone();
-
-				mesh.a = new Vector2();
+				mesh.acceleration.set();
 				mesh.grabbed = true;
 
 				current = mesh;
@@ -47,8 +47,8 @@ export const
 
 		a = p.substract(o).clampScalar({min: 2, minReplace: 0});
 
-		current.p = p.substract(d);
-		current.a = a.multiplyScalar(boost); // Acceleration punch
+		current.position = p.substract(d);
+		current.acceleration = a.multiplyScalar(boost); // Acceleration punch
 
 		o = p;
 	},

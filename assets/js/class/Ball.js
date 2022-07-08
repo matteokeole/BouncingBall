@@ -1,17 +1,17 @@
+import {Vector2} from "../class/Vector2.js";
+
 /**
  * @constructor
- * @param	{Vector2}	position		Default position
- * @param	{Vector2}	acceleration	Default acceleration
- * @param	{number}	radius			Ball radius
- * @param	{number}	color			Ball color (0x)
+ * @param	{number}	radius	Ball radius
+ * @param	{number}	color	Ball color (hexadecimal)
  * @returns	{Ball}
  */
-export function Ball(position, acceleration, radius, color) {
-	this.p = position;
-	this.a = acceleration;
+export function Ball(radius, color) {
+	Object.assign(this, {radius, color});
 
-	this.rad = radius;
-	this.color = color;
+	this.position = new Vector2();
+	this.rotation = 0;
+	this.acceleration = new Vector2();
 
 	this.grabbed = false;
 
