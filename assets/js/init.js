@@ -1,10 +1,9 @@
 import {Ball} from "./class/Ball.js";
 import {Box} from "./class/Box.js";
-import {Vector2} from "./class/Vector2.js";
 import {meshes} from "./main.js";
 
 export default () => {
-	let ball1 = new Ball(
+	const ball1 = new Ball(
 		25,
 		0x7f5056,
 	);
@@ -13,7 +12,7 @@ export default () => {
 
 
 
-	let ball2 = new Ball(
+	const ball2 = new Ball(
 		33,
 		0x374158,
 	);
@@ -22,12 +21,12 @@ export default () => {
 
 
 
-	let box1 = new Box(
+	const box1 = new Box(
 		66, 66,
 		0x7f5056,
 	);
 
 
 
-	meshes.push(box1);
+	meshes.push(ball1, ball2);
 };

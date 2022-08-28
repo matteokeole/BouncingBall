@@ -15,7 +15,6 @@ export const
 		friction: .7,
 	};
 
-// Drag & drop events
 C.addEventListener("mousedown", grab);
 addEventListener("mouseup", release);
 
