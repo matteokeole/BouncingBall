@@ -1,6 +1,6 @@
+import {Physics, meshes} from "./main.js";
 import {Ball} from "./class/Ball.js";
 import {Box} from "./class/Box.js";
-import {Physics, meshes} from "./main.js";
 
 export default () => {
 	for (const mesh of meshes) {
@@ -12,23 +12,23 @@ export default () => {
 		switch (true) {
 			case mesh instanceof Ball:
 				if (mesh.grabbed) {
-					if (mesh.position.x - mesh.radius < -C.w2) mesh.position.x = -C.w2 + mesh.radius;
-					if (mesh.position.x + mesh.radius > C.w2) mesh.position.x = C.w2 - mesh.radius;
+					if (mesh.position.x - mesh.rad < -C.w2) mesh.position.x = -C.w2 + mesh.rad;
+					if (mesh.position.x + mesh.rad > C.w2) mesh.position.x = C.w2 - mesh.rad;
 
-					if (mesh.position.y - mesh.radius < -C.h2) mesh.position.y = -C.h2 + mesh.radius;
-					if (mesh.position.y + mesh.radius > C.h2) mesh.position.y = C.h2 - mesh.radius;
+					if (mesh.position.y - mesh.rad < -C.h2) mesh.position.y = -C.h2 + mesh.rad;
+					if (mesh.position.y + mesh.rad > C.h2) mesh.position.y = C.h2 - mesh.rad;
 				}
 
 				// Left & right
 				if (
-					p.x - mesh.radius < -C.w2 ||
-					p.x + mesh.radius > C.w2
+					p.x - mesh.rad < -C.w2 ||
+					p.x + mesh.rad > C.w2
 				) mesh.acceleration.x *= -Physics.friction;
 
 				// Top & bottom
 				if (
-					p.y - mesh.radius < -C.h2 ||
-					p.y + mesh.radius > C.h2
+					p.y - mesh.rad < -C.h2 ||
+					p.y + mesh.rad > C.h2
 				) mesh.acceleration.y *= -Physics.friction;
 
 				break;

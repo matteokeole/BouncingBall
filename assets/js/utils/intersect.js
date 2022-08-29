@@ -4,7 +4,7 @@ import {Box} from "../class/Box.js";
 export function intersect(v, mesh) {
 	switch (true) {
 		case mesh instanceof Ball:
-			return v.distanceTo(mesh.position) <= mesh.radius + 1;
+			return v.distanceTo(mesh.position) <= mesh.rad + 1;
 
 		case mesh instanceof Box:
 			return (

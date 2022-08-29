@@ -1,6 +1,6 @@
-import {grab, release} from "./utils/grab.js";
 import init from "./init.js";
 import loop from "./loop.js";
+import {grab, release} from "./utils/grab.js";
 
 C.width = 600;
 C.height = 600;

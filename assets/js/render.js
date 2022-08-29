@@ -1,7 +1,7 @@
-import {Vector2} from "./class/Vector2.js";
+import {ctx, meshes} from "./main.js";
 import {Ball} from "./class/Ball.js";
 import {Box} from "./class/Box.js";
-import {ctx, meshes} from "./main.js";
+import {Vector2} from "./class/Vector2.js";
 
 export default () => {
 	// Clear the canvas
@@ -17,8 +17,8 @@ export default () => {
 			ctx.ellipse(
 				p.x,
 				-p.y,
-				mesh.radius,
-				mesh.radius,
+				mesh.rad,
+				mesh.rad,
 				0,
 				0,
 				Math.PI * 2,

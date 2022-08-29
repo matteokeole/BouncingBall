@@ -6,7 +6,7 @@
  * @param	{number}	y
  * @returns	{Vector2}
  */
-export const Vector2 = function(x, y) {
+export function Vector2(x, y) {
 	return this.set(x, y);
 };
 
@@ -14,7 +14,7 @@ export const Vector2 = function(x, y) {
  * Adds another vector to this vector.
  * 
  * @param	{Vector2}	v
- * @returns	{Vector2}
+ * @returns	{self}
  */
 Vector2.prototype.add = function(v) {
 	return new Vector2(
@@ -27,7 +27,7 @@ Vector2.prototype.add = function(v) {
  * Adds a given scalar value to this vector's coordinates.
  * 
  * @param	{number}	n
- * @returns	{Vector2}
+ * @returns	{self}
  */
 Vector2.prototype.addScalar = function(n) {
 	return new Vector2(
@@ -47,21 +47,18 @@ Vector2.prototype.addScaledVector = function(v, n) {
 	return this.add(v.multiplyScalar(n));
 };
 
-Vector2.prototype.clampScalar = function(options) {
-	let abs = new Vector2(
-		Math.abs(this.x),
-		Math.abs(this.y),
-	);
-
-	if (options.min !== undefined) {
-		if (abs.x < options.min) this.x = options.minReplace;
-		if (abs.y < options.min) this.y = options.minReplace;
-	}
-
-	if (options.max !== undefined) {
-		if (abs.x > options.max) this.x = options.maxReplace;
-		if (abs.y > options.max) this.y = options.maxReplace;
-	}
+/**
+ * Clamps this vector to the `min` and `max` values.
+ * 
+ * @param	{number}	min
+ * @param	{number}	max
+ * @returns	{self}
+ */
+Vector2.prototype.clampScalar = function(min, max) {
+	this.x < min && (this.x = min);
+	this.y < min && (this.y = min);
+	this.x > max && (this.x = max);
+	this.y > max && (this.y = max);
 
 	return this;
 }
@@ -251,7 +248,7 @@ Vector2.prototype.round = function() {
  * @param	{number}	[x=0]
  * @param	{number}	[y=x]
  * @param	{number}	[z=x]
- * @returns	self
+ * @returns	{self}
  */
 Vector2.prototype.set = function(x = 0, y = x) {
 	if (x instanceof Vector2) {
@@ -271,7 +268,7 @@ Vector2.prototype.set = function(x = 0, y = x) {
  * Sets the X coordinate of this vector.
  * 
  * @param	{number}	x
- * @returns	self
+ * @returns	{self}
  */
 Vector2.prototype.setX = function(x) {
 	this.x = x;
@@ -283,7 +280,7 @@ Vector2.prototype.setX = function(x) {
  * Sets the Y coordinate of this vector.
  * 
  * @param	{number}	y
- * @returns	self
+ * @returns	{self}
  */
 Vector2.prototype.setY = function(y) {
 	this.y = y;

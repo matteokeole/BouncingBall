@@ -8,8 +8,8 @@ let cbr,
 	current,
 	o,			// Origin
 	d,			// Distance between the origin and the ball center
-	a,			// Ball acceleration
-	boost = 2;	// Acceleration boost
+	a,			// Acceleration vector
+	boost = 1;	// Acceleration multiplier (boost)
 
 export const
 	grab = e => {
@@ -25,7 +25,7 @@ export const
 			// Get the distance to the mesh center
 			d = o.substract(mesh.position);
 
-			// Check if the pointer is intersecting with the mesh
+			// Look for mesh~pointer intersections
 			if (intersect(o, mesh)) {
 				o = mesh.position.clone();
 
@@ -40,20 +40,26 @@ export const
 		}
 	},
 	move = e => {
-		let p = new Vector2(
+		const p = new Vector2(
 			e.clientX - cbr.x - C.w2,
 			-(e.clientY - cbr.y - C.h2),
 		);
 
-		a = p.substract(o).clampScalar({min: 2, minReplace: 0});
+		a = p.substract(o);
 
 		current.position = p.substract(d);
-		current.acceleration = a.multiplyScalar(boost); // Acceleration punch
+		current.acceleration = a.multiplyScalar(boost);
 
 		o = p;
 	},
 	release = e => {
 		if (current) {
+			// Clamp the position to the canvas borders
+			current.position = current.position.clampScalar(
+				-C.w2 + current.rad,
+				C.w2 - current.rad,
+			);
+
 			current.grabbed = false;
 			current = null;
 		}
