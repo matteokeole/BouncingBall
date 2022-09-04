@@ -1,20 +1,19 @@
 import {meshes} from "./main.js";
 import {Box} from "./class/Box.js";
-import {Vector2} from "./class/Vector2.js";
 
 export default () => {
-	const box1 = new Box({
-		position: new Vector2(-150, 0),
-		velocity: new Vector2(0, 0),
-		mass: 3,
-		color: 0x374158,
+	const box2 = new Box({
+		p: 5,
+		v: -0.01,
+		m: 10,
+		color: 0x7f5056,
 	});
 
-	const box2 = new Box({
-		position: new Vector2(100, 0),
-		velocity: new Vector2(-0.5, 0),
-		mass: 4,
-		color: 0x7f5056,
+	const box1 = new Box({
+		p: 2,
+		v: 0,
+		m: 1,
+		color: 0x374158,
 	});
 
 	meshes.push(box1, box2);

@@ -1,20 +1,17 @@
-import {ctx, meshes} from "./main.js";
-import {Box} from "./class/Box.js";
-import {Vector2} from "./class/Vector2.js";
+import {ctx, meshes, SCALE} from "./main.js";
 
 export default () => {
 	// Clear the canvas
 	ctx.clearRect(0, 0, C.width, C.height);
 
-	const O = new Vector2(C.width / 2, C.height);
+	// Render the meshes
+	{
+		for (const mesh of meshes) {
+			ctx.fillStyle = `#${mesh.color.toString(16).padStart(6, 0)}`;
 
-	for (const mesh of meshes) {
-		ctx.fillStyle = `#${String(mesh.color.toString(16)).padStart(6, 0)}`;
+			const {p, size} = mesh;
 
-		if (mesh instanceof Box) {
-			const p = mesh.p.add(O);
-
-			ctx.fillRect(p.x, p.y, mesh.size, -mesh.size);
+			ctx.fillRect(p * SCALE, C.height, size, -size);
 		}
 	}
 };
