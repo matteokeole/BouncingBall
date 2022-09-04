@@ -15,8 +15,8 @@ export const
 		friction: .7,
 	};
 
-C.addEventListener("mousedown", grab);
-addEventListener("mouseup", release);
+// C.addEventListener("mousedown", grab);
+// addEventListener("mouseup", release);
 
 init(meshes);
 

@@ -1,6 +1,4 @@
 import {Vector2} from "../class/Vector2.js";
-import {Ball} from "../class/Ball.js";
-import {Box} from "../class/Box.js";
 import {meshes} from "../main.js";
 import {intersect} from "./intersect.js";
 
