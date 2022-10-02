@@ -42,6 +42,8 @@ function verts(ctx, mesh, verts) {
 }
 
 function point(ctx, p, id) {
+	return;
+
 	const i = p.clone().floor();
 	ctx.align("center");
 	ctx.fillText([id, i.x, i.y].join(" "), p.x, p.y - 4);
@@ -49,7 +51,7 @@ function point(ctx, p, id) {
 
 function aabb(ctx, mesh) {
 	const {C: c, aabb, aabbColor, aabbEventColor} = mesh;
-	const aabbC = c.substract(aabb.size);
+	const aabbC = c.substract(aabb.size.divideScalar(2));
 	const projectionLine = 15;
 	let v2;
 
@@ -68,21 +70,21 @@ function aabb(ctx, mesh) {
 	ctx.fillText(`AABB: ${aabb.size.x.toFixed()} ${aabb.size.y.toFixed()}`, aabbC.x, aabbC.y - 1);
 
 	// AABB X projection
-	/*{
+	{
 		ctx.setLineDash([4]);
 
 		ctx.beginPath();
 		for (const v of aabb.vertices) {
 			v2 = v.add(c);
 
-			ctx.moveTo(v2.x, c.y + aabb.size.y);
+			ctx.moveTo(v2.x, c.y + aabb.size.y / 2);
 			ctx.lineTo(v2.x, C.height);
 			ctx.moveTo(0, v2.y);
-			ctx.lineTo(c.x - aabb.size.x, v2.y);
+			ctx.lineTo(c.x - aabb.size.x / 2, v2.y);
 		}
 		ctx.closePath();
 		ctx.stroke();
 
 		ctx.setLineDash([]);
-	}*/
+	}
 }
