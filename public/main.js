@@ -15,7 +15,7 @@ export const
 		new Box({
 			width: 70,
 			height: 240,
-			position: new Vector2(380, 280),
+			position: new Vector2(380, 380),
 			angle: Math.PI / 2,
 		}, "#476384"),
 	];

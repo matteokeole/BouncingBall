@@ -5,6 +5,8 @@ export default () => {
 	ctx.clearRect(0, 0, C.width, C.height);
 
 	for (const mesh of meshes) {
+		if (!mesh.visible) continue;
+
 		const {C, vertices} = mesh;
 
 		aabb(ctx, mesh);
@@ -46,23 +48,41 @@ function point(ctx, p, id) {
 }
 
 function aabb(ctx, mesh) {
-	const {C, aabb, aabbColor, aabbEventColor} = mesh;
+	const {C: c, aabb, aabbColor, aabbEventColor} = mesh;
+	const aabbC = c.substract(aabb.size);
+	const projectionLine = 15;
+	let v2;
 
 	ctx.fillStyle = ctx.strokeStyle = aabbColor;
 
-	let v2;
-
 	ctx.beginPath();
 	for (const v of aabb.vertices) {
-		v2 = v.add(C);
+		v2 = v.add(c);
 
 		ctx.lineTo(v2.x, v2.y);
 	}
 	ctx.closePath();
 	ctx.stroke();
 
-	const aabbC = C.substract(aabb.size);
-
 	ctx.align("left", "bottom");
 	ctx.fillText(`AABB: ${aabb.size.x.toFixed()} ${aabb.size.y.toFixed()}`, aabbC.x, aabbC.y - 1);
+
+	// AABB X projection
+	/*{
+		ctx.setLineDash([4]);
+
+		ctx.beginPath();
+		for (const v of aabb.vertices) {
+			v2 = v.add(c);
+
+			ctx.moveTo(v2.x, c.y + aabb.size.y);
+			ctx.lineTo(v2.x, C.height);
+			ctx.moveTo(0, v2.y);
+			ctx.lineTo(c.x - aabb.size.x, v2.y);
+		}
+		ctx.closePath();
+		ctx.stroke();
+
+		ctx.setLineDash([]);
+	}*/
 }

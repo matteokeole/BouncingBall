@@ -4,12 +4,13 @@ export function Box({width, height, position, angle}, color) {
 	this.C = position;
 	this.angle = angle;
 	this.color = color;
+	this.visible = true;
 
 	this.positions = [
-		new Vector2(-1, -1),
-		new Vector2( 1, -1),
-		new Vector2( 1,  1),
-		new Vector2(-1,  1),
+		new Vector2(-.5, -.5),
+		new Vector2( .5, -.5),
+		new Vector2( .5,  .5),
+		new Vector2(-.5,  .5),
 	];
 	this.vertices = Array(4);
 
@@ -27,7 +28,7 @@ export function Box({width, height, position, angle}, color) {
 		const {angle, positions, vertices} = this;
 
 		for (let i in positions) {
-			const v = new Vector2(width, height).multiply(positions[i]).divideScalar(2);
+			const v = new Vector2(width, height).multiply(positions[i]);
 
 			vertices[i] = new Vector2(
 				v.x * Math.cos(angle) - v.y * Math.sin(angle),
@@ -39,9 +40,33 @@ export function Box({width, height, position, angle}, color) {
 	this.intersect = mesh => {
 		const
 			{C, aabb}				= this,
-			{C: C2, aabb: aabb2}	= mesh,
-			aabbSize				= aabb.size.add(C),
-			aabb2Size				= aabb2.size.add(C2);
+			{C: C2, aabb: aabb2}	= mesh;
+
+		let a = C.x - aabb.size.x;
+		let b = C.x + aabb.size.x;
+		let a2 = C2.x - aabb2.size.x;
+		let b2 = C2.x + aabb2.size.x;
+
+		// X meeting
+		if (
+			(
+				(a2 >= a && a2 <= b) ||
+				(b2 >= a && b2 <= b)
+			) || (a2 < a && b2 > b)
+		) {
+			// Y meeting
+			a = C.y - aabb.size.y;
+			b = C.y + aabb.size.y;
+			a2 = C2.y - aabb2.size.y;
+			b2 = C2.y + aabb2.size.y;
+
+			if (
+				(
+					(a2 >= a && a2 <= b) ||
+					(b2 >= a && b2 <= b)
+				) || (a2 < a && b2 > b)
+			) return true;
+		}
 
 		return false;
 	};
