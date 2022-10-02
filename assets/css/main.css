@@ -1,7 +1,7 @@
 :root {
 	--primary: #7f5056;
-	--secondary: #11151d;
-	--tertiary: #374158;
+	--secondary: #242936;
+	--tertiary: #565f6e;
 }
 
 body {
@@ -16,4 +16,5 @@ body {
 
 canvas {
 	border: 1px solid var(--tertiary);
+	image-rendering: pixelated;
 }
